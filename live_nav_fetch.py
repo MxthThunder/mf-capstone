@@ -20,5 +20,18 @@ def fetch_nav(scheme_code: str, scheme_name: str):
     print(f"Saved {scheme_name} NAV to {out_path}")
 
 if __name__ == "__main__":
-    # Example: HDFC Top 100 Direct (125497)
-    fetch_nav("125497", "HDFC_Top_100_Direct")
+    schemes = {
+        "125497": "HDFC_Top_100_Direct",
+        "119551": "SBI_Bluechip",
+        "120503": "ICICI_Bluechip",
+        "118632": "Nippon_Large_Cap",
+        "119092": "Axis_Bluechip",
+        "120841": "Kotak_Bluechip"
+    }
+    
+    for code, name in schemes.items():
+        try:
+            fetch_nav(code, name)
+        except Exception as e:
+            print(f"Error fetching {name} ({code}): {e}")
+
