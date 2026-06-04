@@ -210,7 +210,7 @@ def build_pdf():
     <b>Prepared For:</b> Bluestock Fintech<br/>
     <b>Author:</b> Antigravity AI Engineer<br/>
     <b>Date:</b> June 2026<br/>
-    <b>Project Stage:</b> Day 4 Core Execution & Final Review<br/>
+    <b>Project Stage:</b> Complete Deliverables & Final Review<br/>
     <b>Database Version:</b> v1.4 (SQLite Star Schema)<br/>
     """
     story.append(Paragraph(meta_text, meta_style))
