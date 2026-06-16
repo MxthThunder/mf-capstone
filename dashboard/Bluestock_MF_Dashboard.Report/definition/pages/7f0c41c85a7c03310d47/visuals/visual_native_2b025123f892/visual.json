@@ -1,0 +1,155 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "visual_native_2b025123f892",
+  "position": {
+    "x": 20,
+    "y": 90,
+    "z": 20,
+    "height": 280,
+    "width": 600,
+    "tabOrder": 24
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "scheme_name"
+                }
+              },
+              "queryRef": "07_scheme_performance.scheme_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "07_scheme_performance.category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "return_1yr_pct"
+                }
+              },
+              "queryRef": "07_scheme_performance.return_1yr_pct"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "return_3yr_pct"
+                }
+              },
+              "queryRef": "07_scheme_performance.return_3yr_pct"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "sharpe_ratio"
+                }
+              },
+              "queryRef": "07_scheme_performance.sharpe_ratio"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "risk_grade"
+                }
+              },
+              "queryRef": "07_scheme_performance.risk_grade"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "aum_crore"
+                }
+              },
+              "queryRef": "07_scheme_performance.aum_crore"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {}
+            },
+            "backColor": {
+              "solid": {}
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {}
+            },
+            "backColor": {
+              "solid": {}
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

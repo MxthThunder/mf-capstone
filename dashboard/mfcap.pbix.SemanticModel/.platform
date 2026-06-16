@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "mfcap.pbix"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c70369da-496c-43f1-8413-cd516e6869df"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "visual_native_5d248cf5a587",
+  "position": {
+    "x": 640,
+    "y": 20,
+    "z": 20,
+    "height": 280,
+    "width": 600,
+    "tabOrder": 20
+  },
+  "visual": {
+    "visualType": "lineClusteredColumnComboChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "04_monthly_sip_inflows"
+                    }
+                  },
+                  "Property": "month"
+                }
+              },
+              "queryRef": "04_monthly_sip_inflows.month",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "04_monthly_sip_inflows"
+                    }
+                  },
+                  "Property": "sip_inflow_crore"
+                }
+              },
+              "queryRef": "04_monthly_sip_inflows.sip_inflow_crore",
+              "active": true
+            }
+          ]
+        },
+        "Y2": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "10_benchmark_indices"
+                    }
+                  },
+                  "Property": "close_value"
+                }
+              },
+              "queryRef": "10_benchmark_indices.close_value",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

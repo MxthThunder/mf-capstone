@@ -1,0 +1,49 @@
+table 10_benchmark_indices
+	lineageTag: 98ef2b62-19bf-4581-8a07-1066df4877bc
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: adc22dda-98e4-4b0c-97ce-84d559657eca
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: 1a97d188-68e6-400d-a42d-6f42e06d6d92
+			defaultHierarchy: LocalDateTable_d599acfd-b0da-496c-a783-6c1c0dddced9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column index_name
+		dataType: string
+		lineageTag: 85d140e1-3e24-4641-bb17-3281074e8b4a
+		summarizeBy: none
+		sourceColumn: index_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column close_value
+		dataType: double
+		lineageTag: 7871f6e6-4ce5-4b54-a045-8c9e9da5262e
+		summarizeBy: none
+		sourceColumn: close_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 10_benchmark_indices = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_benchmark_indices.csv"), [Delimiter = ",", Columns = 3, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"date", type date}, {"index_name", type text}, {"close_value", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

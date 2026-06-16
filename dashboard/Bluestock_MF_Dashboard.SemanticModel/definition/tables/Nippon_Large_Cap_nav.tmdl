@@ -1,0 +1,33 @@
+table Nippon_Large_Cap_nav
+	lineageTag: 540ca633-2a9d-47cc-b8da-b6e89ab6a100
+
+	column date
+		dataType: string
+		lineageTag: 88e70fd9-85f2-4b17-87d9-f0701b764b58
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column nav
+		dataType: double
+		lineageTag: d55641a2-7f7d-47a7-a69c-7925b56ecb91
+		summarizeBy: sum
+		sourceColumn: nav
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Nippon_Large_Cap_nav = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\raw\Nippon_Large_Cap_nav.csv"), [Delimiter = ",", Columns = 2, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"date", type text}, {"nav", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,243 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 1233,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 782,
+            "y": 465
+          },
+          "nodeIndex": "01_fund_master",
+          "nodeLineageTag": "80234885-8b96-477f-946a-ade89a92d513",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 74
+          },
+          "nodeIndex": "02_nav_history",
+          "nodeLineageTag": "a76e0c91-0411-4833-9355-0cee9c928aed",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 563,
+            "y": 47
+          },
+          "nodeIndex": "03_aum_by_fund_house",
+          "nodeLineageTag": "e7e6af0f-4610-4a10-b401-f456eff3d241",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 38
+          },
+          "nodeIndex": "04_monthly_sip_inflows",
+          "nodeLineageTag": "9e6ac3a8-5a1a-40b6-8d5b-5f7e0f8161f5",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136,
+            "y": 74
+          },
+          "nodeIndex": "05_category_inflows",
+          "nodeLineageTag": "e3709225-b645-4fe6-99a9-704b4e4b1938",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1420,
+            "y": 38
+          },
+          "nodeIndex": "06_industry_folio_count",
+          "nodeLineageTag": "5859d692-f2f7-4f77-8030-7a35ee94fd9f",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1704,
+            "y": 0
+          },
+          "nodeIndex": "07_scheme_performance",
+          "nodeLineageTag": "0c29c7dd-20a1-4b5a-8ef1-3f8d34d35468",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1988,
+            "y": 0
+          },
+          "nodeIndex": "08_investor_transactions",
+          "nodeLineageTag": "ae89b601-a47b-4e8d-843c-7f1dfd28bbb7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2272,
+            "y": 14
+          },
+          "nodeIndex": "09_portfolio_holdings",
+          "nodeLineageTag": "9eae3ade-60c1-4f53-998b-db5119373b28",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2556,
+            "y": 74
+          },
+          "nodeIndex": "10_benchmark_indices",
+          "nodeLineageTag": "98ef2b62-19bf-4581-8a07-1066df4877bc",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2840,
+            "y": 86
+          },
+          "nodeIndex": "Axis_Bluechip_nav",
+          "nodeLineageTag": "64bcb85e-e450-4402-b6f7-987f680f3272",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3124,
+            "y": 86
+          },
+          "nodeIndex": "HDFC_Top_100_Direct_nav",
+          "nodeLineageTag": "0dfb0543-aee8-4a4a-9d17-b472ece62b47",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3408,
+            "y": 86
+          },
+          "nodeIndex": "ICICI_Bluechip_nav",
+          "nodeLineageTag": "507a02f1-616b-4352-b051-5a574b06ea16",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3692,
+            "y": 86
+          },
+          "nodeIndex": "Kotak_Bluechip_nav",
+          "nodeLineageTag": "d92b55f5-320d-4313-89a6-872c7c620a81",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3976,
+            "y": 86
+          },
+          "nodeIndex": "Nippon_Large_Cap_nav",
+          "nodeLineageTag": "540ca633-2a9d-47cc-b8da-b6e89ab6a100",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4260,
+            "y": 86
+          },
+          "nodeIndex": "SBI_Bluechip_nav",
+          "nodeLineageTag": "7b999f1a-c5a7-4b36-bc25-447cccc10f36",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4260,
+            "y": 258.5
+          },
+          "nodeIndex": "dim_date",
+          "nodeLineageTag": "7a9e0f6c-8f9b-44a7-8500-51d106097433",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

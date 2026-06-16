@@ -1,0 +1,88 @@
+table 06_industry_folio_count
+	lineageTag: 5859d692-f2f7-4f77-8030-7a35ee94fd9f
+
+	/// Latest total folios in Crore
+	measure 'Latest Total Folios (Cr)' =
+			VAR _lastMonth = MAXX(ALL('06_industry_folio_count'), '06_industry_folio_count'[month])
+			RETURN CALCULATE(SUM('06_industry_folio_count'[total_folios_crore]), '06_industry_folio_count'[month] = _lastMonth)
+		formatString: #,##0.00
+		lineageTag: 01741269-defa-4357-a991-0ecb3696ff03
+
+	column month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b8bc9f47-285c-46ef-8d94-5303fa8260ff
+		summarizeBy: none
+		sourceColumn: month
+
+		variation Variation
+			isDefault
+			relationship: b9f0529f-e177-44ae-95a5-94b0367e686b
+			defaultHierarchy: LocalDateTable_83910e96-cd88-44a7-a8aa-915f9445cf55.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total_folios_crore
+		dataType: double
+		lineageTag: 52122909-7f05-48d6-8c99-cf74fa514719
+		summarizeBy: sum
+		sourceColumn: total_folios_crore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column equity_folios_crore
+		dataType: double
+		lineageTag: 9f2754d9-d90c-414b-b7bf-54dde98b3196
+		summarizeBy: sum
+		sourceColumn: equity_folios_crore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column debt_folios_crore
+		dataType: double
+		lineageTag: b696a08f-8b00-4cd4-98e5-2fdde434a232
+		summarizeBy: none
+		sourceColumn: debt_folios_crore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column hybrid_folios_crore
+		dataType: double
+		lineageTag: da78c4d0-d046-47f7-94e1-f3706aa0e497
+		summarizeBy: sum
+		sourceColumn: hybrid_folios_crore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column others_folios_crore
+		dataType: double
+		lineageTag: 0fc603ad-5a08-4a3f-86e9-d6d45802d84c
+		summarizeBy: sum
+		sourceColumn: others_folios_crore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 06_industry_folio_count = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_industry_folio_count.csv"), [Delimiter = ",", Columns = 6, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"month", type date}, {"total_folios_crore", type number}, {"equity_folios_crore", type number}, {"debt_folios_crore", type number}, {"hybrid_folios_crore", type number}, {"others_folios_crore", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

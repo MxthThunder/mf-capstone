@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "visual_native_b6efd8737e48",
+  "position": {
+    "x": 640,
+    "y": 405,
+    "z": 20,
+    "height": 250,
+    "width": 600,
+    "tabOrder": 27
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "scheme_name"
+                }
+              },
+              "queryRef": "07_scheme_performance.scheme_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "alpha"
+                }
+              },
+              "queryRef": "07_scheme_performance.alpha"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "beta"
+                }
+              },
+              "queryRef": "07_scheme_performance.beta"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "sortino_ratio"
+                }
+              },
+              "queryRef": "07_scheme_performance.sortino_ratio"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "07_scheme_performance"
+                    }
+                  },
+                  "Property": "max_drawdown_pct"
+                }
+              },
+              "queryRef": "07_scheme_performance.max_drawdown_pct"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {}
+            },
+            "backColor": {
+              "solid": {}
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {}
+            },
+            "backColor": {
+              "solid": {}
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "visual_native_d36062fd359b",
+  "position": {
+    "x": 640,
+    "y": 20,
+    "z": 20,
+    "height": 260,
+    "width": 280,
+    "tabOrder": 23
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "08_investor_transactions"
+                    }
+                  },
+                  "Property": "transaction_type"
+                }
+              },
+              "queryRef": "08_investor_transactions.transaction_type",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "08_investor_transactions"
+                    }
+                  },
+                  "Property": "amount_inr"
+                }
+              },
+              "queryRef": "08_investor_transactions.amount_inr",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2efbdaaece4dc7e01516",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "08_investor_transactions"
+              }
+            },
+            "Property": "transaction_type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5e7ec6861daa0bbbac0c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "08_investor_transactions"
+              }
+            },
+            "Property": "amount_inr"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

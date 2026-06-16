@@ -1,0 +1,94 @@
+table 09_portfolio_holdings
+	lineageTag: 9eae3ade-60c1-4f53-998b-db5119373b28
+
+	column amfi_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 6116327c-6916-4402-b8e4-9b46c015e2a1
+		summarizeBy: none
+		sourceColumn: amfi_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column stock_symbol
+		dataType: string
+		lineageTag: 0a4737cb-c35a-4e27-9fab-fb9aeb4ce2ab
+		summarizeBy: none
+		sourceColumn: stock_symbol
+
+		annotation SummarizationSetBy = Automatic
+
+	column stock_name
+		dataType: string
+		lineageTag: fff64e66-548d-4dbd-be64-d5b21a498ea8
+		summarizeBy: none
+		sourceColumn: stock_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column sector
+		dataType: string
+		lineageTag: f59cdc28-8252-4b9a-987a-8df5e822850b
+		summarizeBy: none
+		sourceColumn: sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column weight_pct
+		dataType: double
+		lineageTag: 77cb5186-02f6-4b95-8367-c1a51accf066
+		summarizeBy: sum
+		sourceColumn: weight_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column market_value_cr
+		dataType: double
+		lineageTag: 2bcbc2ad-2847-447d-aca0-467b30e50dc0
+		summarizeBy: sum
+		sourceColumn: market_value_cr
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column current_price_inr
+		dataType: double
+		lineageTag: 6d863751-e8d1-412c-81a6-0077004c81d3
+		summarizeBy: sum
+		sourceColumn: current_price_inr
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column portfolio_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7d1e7b64-5bc2-4768-83fd-b2ed26cc174e
+		summarizeBy: none
+		sourceColumn: portfolio_date
+
+		variation Variation
+			isDefault
+			relationship: 6ab8e474-119e-42a7-800a-c9fba4d5dad6
+			defaultHierarchy: LocalDateTable_428b7d44-eaf8-4c1e-9eba-7306d8405caa.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition 09_portfolio_holdings = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_portfolio_holdings.csv"), [Delimiter = ",", Columns = 8, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"amfi_code", Int64.Type}, {"stock_symbol", type text}, {"stock_name", type text}, {"sector", type text}, {"weight_pct", type number}, {"market_value_cr", type number}, {"current_price_inr", type number}, {"portfolio_date", type date}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,109 @@
+table 03_aum_by_fund_house
+	lineageTag: e7e6af0f-4610-4a10-b401-f456eff3d241
+
+	/// Total industry AUM in Lakh Crore
+	measure 'Total AUM (₹ Lakh Cr)' = ROUND(SUM('03_aum_by_fund_house'[aum_lakh_crore]), 2)
+		formatString: ₹#,##0.00" L Cr"
+		lineageTag: 200d33f1-94c3-4920-90aa-9547df8ac713
+
+	/// Most recent month total AUM
+	measure 'Latest AUM (₹ Lakh Cr)' =
+			VAR _lastDate = MAXX(ALL('03_aum_by_fund_house'), '03_aum_by_fund_house'[date])
+			RETURN CALCULATE(ROUND(SUM('03_aum_by_fund_house'[aum_lakh_crore]), 2), '03_aum_by_fund_house'[date] = _lastDate)
+		formatString: ₹#,##0.00" L Cr"
+		lineageTag: 19df87fc-e63d-4a8d-8ade-cb39b89a64d2
+
+	/// Total AUM in Crore
+	measure 'Total AUM (₹ Crore)' = SUM('03_aum_by_fund_house'[aum_crore])
+		formatString: ₹#,##0
+		lineageTag: d5d83469-3d2c-4264-a203-ee302f70203e
+
+	/// Total number of schemes (latest month)
+	measure 'Total Schemes' =
+			VAR _lastDate = MAXX(ALL('03_aum_by_fund_house'), '03_aum_by_fund_house'[date])
+			RETURN CALCULATE(SUM('03_aum_by_fund_house'[num_schemes]), '03_aum_by_fund_house'[date] = _lastDate)
+		formatString: #,##0
+		lineageTag: 3f03f26b-1cce-4c8f-bbfe-d697a42695f9
+
+	/// Total AUM headline in Lakh Crore - uses latest AUM snapshot across all fund houses
+	measure 'Industry AUM (Latest)' =
+			VAR _lastDate = MAXX(ALL('03_aum_by_fund_house'), '03_aum_by_fund_house'[date])
+			VAR _latestAUM = CALCULATE(SUM('03_aum_by_fund_house'[aum_lakh_crore]), '03_aum_by_fund_house'[date] = _lastDate)
+			RETURN ROUND(_latestAUM, 2)
+		formatString: ₹#,##0.00" L Cr"
+		lineageTag: b3b3b2c3-fa5e-4cf0-93b0-b17cfdbed506
+
+	/// MoM change in total industry AUM
+	measure 'AUM MoM Change (%)' =
+			VAR _lastDate = MAXX(ALL('03_aum_by_fund_house'), '03_aum_by_fund_house'[date])
+			VAR _prevDate = MAXX(FILTER(ALL('03_aum_by_fund_house'), '03_aum_by_fund_house'[date] < _lastDate), '03_aum_by_fund_house'[date])
+			VAR _thisAUM = CALCULATE(SUM('03_aum_by_fund_house'[aum_lakh_crore]), '03_aum_by_fund_house'[date] = _lastDate)
+			VAR _prevAUM = CALCULATE(SUM('03_aum_by_fund_house'[aum_lakh_crore]), '03_aum_by_fund_house'[date] = _prevDate)
+			RETURN IF(_prevAUM > 0, DIVIDE(_thisAUM - _prevAUM, _prevAUM) * 100, BLANK())
+		formatString: +0.00"%";-0.00"%"
+		lineageTag: 4aa0a43c-17ee-428e-99c5-15301f824a3f
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bb2c4ff3-e217-4656-96c0-e1a62546d59e
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: 71920117-ec05-438e-a963-a364eddcfa7d
+			defaultHierarchy: LocalDateTable_5dd23771-09d6-4ac2-9e9e-51d6cd385074.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fund_house
+		dataType: string
+		lineageTag: 49e1068b-7fe2-48ab-b920-09dace7f09e3
+		summarizeBy: none
+		sourceColumn: fund_house
+
+		annotation SummarizationSetBy = Automatic
+
+	column aum_lakh_crore
+		dataType: double
+		lineageTag: 422c7a05-cecf-4cf2-aff2-56083d8e10f9
+		summarizeBy: sum
+		sourceColumn: aum_lakh_crore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aum_crore
+		dataType: int64
+		formatString: 0
+		lineageTag: a2e6528e-d257-4add-83f4-273f2de2c073
+		summarizeBy: none
+		sourceColumn: aum_crore
+
+		annotation SummarizationSetBy = Automatic
+
+	column num_schemes
+		dataType: int64
+		formatString: 0
+		lineageTag: 60b5bb37-fde1-4145-9bf6-00b6273b00a0
+		summarizeBy: sum
+		sourceColumn: num_schemes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 03_aum_by_fund_house = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_aum_by_fund_house.csv"), [Delimiter = ",", Columns = 5, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"date", type date}, {"fund_house", type text}, {"aum_lakh_crore", type number}, {"aum_crore", Int64.Type}, {"num_schemes", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

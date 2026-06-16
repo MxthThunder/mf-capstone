@@ -1,0 +1,67 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "visual_native_ad53ef7dd6af",
+  "position": {
+    "x": 20,
+    "y": 20,
+    "z": 20,
+    "height": 280,
+    "width": 600,
+    "tabOrder": 21
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "05_category_inflows"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "05_category_inflows.category",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "05_category_inflows"
+                    }
+                  },
+                  "Property": "net_inflow_crore"
+                }
+              },
+              "queryRef": "05_category_inflows.net_inflow_crore",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "defaultColor": {
+              "solid": {}
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

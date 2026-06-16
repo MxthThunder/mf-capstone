@@ -1,0 +1,67 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "visual_native_253799d59fc6",
+  "position": {
+    "x": 940,
+    "y": 20,
+    "z": 20,
+    "height": 260,
+    "width": 300,
+    "tabOrder": 24
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "08_investor_transactions"
+                    }
+                  },
+                  "Property": "state"
+                }
+              },
+              "queryRef": "08_investor_transactions.state",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "08_investor_transactions"
+                    }
+                  },
+                  "Property": "amount_inr"
+                }
+              },
+              "queryRef": "08_investor_transactions.amount_inr",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "defaultColor": {
+              "solid": {}
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

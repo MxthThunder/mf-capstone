@@ -1,0 +1,33 @@
+table HDFC_Top_100_Direct_nav
+	lineageTag: 0dfb0543-aee8-4a4a-9d17-b472ece62b47
+
+	column date
+		dataType: string
+		lineageTag: 12c7d61a-0b0e-4df9-9fd1-4adbfb9010ab
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column nav
+		dataType: double
+		lineageTag: 8e881e7c-5b63-4df0-b90a-67b8cf3312e0
+		summarizeBy: sum
+		sourceColumn: nav
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition HDFC_Top_100_Direct_nav = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\raw\HDFC_Top_100_Direct_nav.csv"), [Delimiter = ",", Columns = 2, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"date", type text}, {"nav", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

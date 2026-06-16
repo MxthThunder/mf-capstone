@@ -1,0 +1,33 @@
+table ICICI_Bluechip_nav
+	lineageTag: 507a02f1-616b-4352-b051-5a574b06ea16
+
+	column date
+		dataType: string
+		lineageTag: 750d64ca-b90b-4c8b-819f-ded4ee9428b7
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column nav
+		dataType: double
+		lineageTag: ebe74d1a-3ad8-4650-9b26-37503cf7b800
+		summarizeBy: sum
+		sourceColumn: nav
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition ICICI_Bluechip_nav = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\raw\ICICI_Bluechip_nav.csv"), [Delimiter = ",", Columns = 2, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"date", type text}, {"nav", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

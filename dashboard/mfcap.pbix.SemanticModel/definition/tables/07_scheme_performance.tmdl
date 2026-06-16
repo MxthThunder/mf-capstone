@@ -1,0 +1,232 @@
+table 07_scheme_performance
+	lineageTag: 0c29c7dd-20a1-4b5a-8ef1-3f8d34d35468
+
+	/// Average annualised standard deviation (risk proxy)
+	measure 'Avg Std Dev (%)' = AVERAGE('07_scheme_performance'[std_dev_ann_pct])
+		formatString: 0.00"%"
+		lineageTag: b28faada-665e-4352-a095-5d480e2d0ad3
+
+	/// Average 3-year return
+	measure 'Avg 3Yr Return (%)' = AVERAGE('07_scheme_performance'[return_3yr_pct])
+		formatString: 0.00"%"
+		lineageTag: 96586086-8e0b-4f01-b458-41f943af543b
+
+	/// Average 1-year return
+	measure 'Avg 1Yr Return (%)' = AVERAGE('07_scheme_performance'[return_1yr_pct])
+		formatString: 0.00"%"
+		lineageTag: e346a6c7-d9b6-4e62-b690-3e7936573276
+
+	/// Sum of AUM across filtered schemes
+	measure 'Scheme AUM (₹ Cr)' = SUM('07_scheme_performance'[aum_crore])
+		formatString: ₹#,##0
+		lineageTag: 1ccf404c-b6e8-464c-9203-75090d585518
+
+	/// Average Sharpe ratio
+	measure 'Avg Sharpe Ratio' = AVERAGE('07_scheme_performance'[sharpe_ratio])
+		formatString: 0.00
+		lineageTag: 6d2a32d1-7abb-4f39-b465-68d4c6f47485
+
+	/// Average alpha
+	measure 'Avg Alpha (%)' = AVERAGE('07_scheme_performance'[alpha])
+		formatString: 0.00"%"
+		lineageTag: b3e6640f-3f2a-4a70-99a4-f54030064d25
+
+	/// Count of schemes in scope
+	measure 'Fund Count' = COUNTROWS('07_scheme_performance')
+		formatString: #,##0
+		lineageTag: 62c79375-0bbd-49cf-ab35-559ccf3286b0
+
+	/// Average beta
+	measure 'Avg Beta' = AVERAGE('07_scheme_performance'[beta])
+		formatString: 0.00
+		lineageTag: ccbf44af-2d94-495c-ac0e-bfba309dd6ca
+
+	column amfi_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 04013572-21ea-4857-9457-025f66f7a269
+		summarizeBy: none
+		sourceColumn: amfi_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheme_name
+		dataType: string
+		lineageTag: 81a1a25b-b20a-4ceb-af62-574590118a02
+		summarizeBy: none
+		sourceColumn: scheme_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column fund_house
+		dataType: string
+		lineageTag: 83a9d431-fd49-4dca-8caa-c8ae1955dcf8
+		summarizeBy: none
+		sourceColumn: fund_house
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: fd876135-97ed-4920-89aa-192517991fb8
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column plan
+		dataType: string
+		lineageTag: c2dcb0ed-6019-4346-95c2-0106f53ef885
+		summarizeBy: none
+		sourceColumn: plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column return_1yr_pct
+		dataType: double
+		lineageTag: 3c9c74d1-c214-4caa-b2e5-d55077fd69db
+		summarizeBy: sum
+		sourceColumn: return_1yr_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column return_3yr_pct
+		dataType: double
+		lineageTag: 9c7b107c-ef4f-42f2-a89d-4384185c2843
+		summarizeBy: sum
+		sourceColumn: return_3yr_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column return_5yr_pct
+		dataType: double
+		lineageTag: 38e039de-74b7-4e23-9012-dbee9bb8539b
+		summarizeBy: sum
+		sourceColumn: return_5yr_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column benchmark_3yr_pct
+		dataType: double
+		lineageTag: 25d72926-7d88-4cf3-ac51-270e9dc1bb48
+		summarizeBy: sum
+		sourceColumn: benchmark_3yr_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column alpha
+		dataType: double
+		lineageTag: d7405a33-e77c-4712-a046-c105e9d2f458
+		summarizeBy: sum
+		sourceColumn: alpha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beta
+		dataType: double
+		lineageTag: 67fef97a-5ff2-4582-9316-6146bce81ec2
+		summarizeBy: sum
+		sourceColumn: beta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sharpe_ratio
+		dataType: double
+		lineageTag: 5ca6d2b0-d378-4f3c-92db-bdd735d5c76e
+		summarizeBy: sum
+		sourceColumn: sharpe_ratio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sortino_ratio
+		dataType: double
+		lineageTag: 66896924-4955-48ce-ac4b-6978b769f4f6
+		summarizeBy: sum
+		sourceColumn: sortino_ratio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column std_dev_ann_pct
+		dataType: double
+		lineageTag: 4696b8d6-5e27-4082-9381-4c1fdd2d746c
+		summarizeBy: sum
+		sourceColumn: std_dev_ann_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column max_drawdown_pct
+		dataType: double
+		lineageTag: 1f049dfe-73db-4b24-a4ad-bdd151bcbe70
+		summarizeBy: sum
+		sourceColumn: max_drawdown_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aum_crore
+		dataType: int64
+		formatString: 0
+		lineageTag: 97f622ad-ad5c-432e-9c59-b16816126393
+		summarizeBy: sum
+		sourceColumn: aum_crore
+
+		annotation SummarizationSetBy = Automatic
+
+	column expense_ratio_pct
+		dataType: double
+		lineageTag: 1894efd6-4e0e-4918-981a-0529f0df9c98
+		summarizeBy: sum
+		sourceColumn: expense_ratio_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column morningstar_rating
+		dataType: int64
+		formatString: 0
+		lineageTag: be396e71-be97-4e1f-b343-685c520be3cc
+		summarizeBy: sum
+		sourceColumn: morningstar_rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_grade
+		dataType: string
+		lineageTag: 7dfce36b-4d88-411e-bab7-a6fe06306b1f
+		summarizeBy: none
+		sourceColumn: risk_grade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 07_scheme_performance = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_scheme_performance.csv"), [Delimiter = ",", Columns = 19, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"amfi_code", Int64.Type}, {"scheme_name", type text}, {"fund_house", type text}, {"category", type text}, {"plan", type text}, {"return_1yr_pct", type number}, {"return_3yr_pct", type number}, {"return_5yr_pct", type number}, {"benchmark_3yr_pct", type number}, {"alpha", type number}, {"beta", type number}, {"sharpe_ratio", type number}, {"sortino_ratio", type number}, {"std_dev_ann_pct", type number}, {"max_drawdown_pct", type number}, {"aum_crore", Int64.Type}, {"expense_ratio_pct", type number}, {"morningstar_rating", Int64.Type}, {"risk_grade", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

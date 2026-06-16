@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "visual_native_6a31a588ecf4",
+  "position": {
+    "x": 20,
+    "y": 405,
+    "z": 20,
+    "height": 250,
+    "width": 600,
+    "tabOrder": 26
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "01_fund_master"
+                    }
+                  },
+                  "Property": "scheme_name"
+                }
+              },
+              "queryRef": "01_fund_master.scheme_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "01_fund_master"
+                    }
+                  },
+                  "Property": "fund_house"
+                }
+              },
+              "queryRef": "01_fund_master.fund_house"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "01_fund_master"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "01_fund_master.category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "01_fund_master"
+                    }
+                  },
+                  "Property": "fund_manager"
+                }
+              },
+              "queryRef": "01_fund_master.fund_manager"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "01_fund_master"
+                    }
+                  },
+                  "Property": "benchmark"
+                }
+              },
+              "queryRef": "01_fund_master.benchmark"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {}
+            },
+            "backColor": {
+              "solid": {}
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {}
+            },
+            "backColor": {
+              "solid": {}
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

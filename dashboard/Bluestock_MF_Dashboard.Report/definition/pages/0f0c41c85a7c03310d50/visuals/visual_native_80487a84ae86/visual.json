@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "visual_native_80487a84ae86",
+  "position": {
+    "x": 20,
+    "y": 95,
+    "z": 20,
+    "height": 300,
+    "width": 1220,
+    "tabOrder": 25
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "02_nav_history"
+                    }
+                  },
+                  "Property": "date"
+                }
+              },
+              "queryRef": "02_nav_history.date",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "02_nav_history"
+                    }
+                  },
+                  "Property": "nav"
+                }
+              },
+              "queryRef": "02_nav_history.nav",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a56c3de10171c9d7e25d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "02_nav_history"
+              }
+            },
+            "Property": "date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "74383abd0eb0aa962203",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "02_nav_history"
+              }
+            },
+            "Property": "nav"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

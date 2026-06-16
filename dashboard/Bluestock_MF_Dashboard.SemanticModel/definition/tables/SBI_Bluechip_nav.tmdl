@@ -1,0 +1,33 @@
+table SBI_Bluechip_nav
+	lineageTag: 7b999f1a-c5a7-4b36-bc25-447cccc10f36
+
+	column date
+		dataType: string
+		lineageTag: 0002299c-1f0a-4797-9170-27f745ce2ead
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column nav
+		dataType: double
+		lineageTag: 5c7cf956-d2d7-4b8c-a28f-a39d4f138eda
+		summarizeBy: sum
+		sourceColumn: nav
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition SBI_Bluechip_nav = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\raw\SBI_Bluechip_nav.csv"), [Delimiter = ",", Columns = 2, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"date", type text}, {"nav", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

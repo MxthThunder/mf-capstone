@@ -1,0 +1,33 @@
+table Kotak_Bluechip_nav
+	lineageTag: d92b55f5-320d-4313-89a6-872c7c620a81
+
+	column date
+		dataType: string
+		lineageTag: 0eafb7e5-fff4-4e3b-ba56-d8b11c9e1d0a
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column nav
+		dataType: double
+		lineageTag: dd20534e-798a-477f-acf5-45edb4117602
+		summarizeBy: sum
+		sourceColumn: nav
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Kotak_Bluechip_nav = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\raw\Kotak_Bluechip_nav.csv"), [Delimiter = ",", Columns = 2, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"date", type text}, {"nav", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

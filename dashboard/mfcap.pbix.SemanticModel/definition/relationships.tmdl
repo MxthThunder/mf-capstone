@@ -1,0 +1,106 @@
+relationship e348ce83-f249-4a51-a09c-2517a8a1bb98
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 01_fund_master.launch_date
+	toColumn: LocalDateTable_6157b204-7209-49c0-8512-bb4f841a4a8b.Date
+
+relationship bca6bb13-666b-4701-ad1a-7efc005e266e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 02_nav_history.date
+	toColumn: LocalDateTable_05525634-6de4-428a-87c2-2fa6ba021be0.Date
+
+relationship AutoDetected_5c82320f-1fa0-49e1-aa4d-ba3029248509
+	fromColumn: 02_nav_history.amfi_code
+	toColumn: 01_fund_master.amfi_code
+
+relationship 71920117-ec05-438e-a963-a364eddcfa7d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 03_aum_by_fund_house.date
+	toColumn: LocalDateTable_5dd23771-09d6-4ac2-9e9e-51d6cd385074.Date
+
+relationship 4e1ddfe0-ee6e-4c58-b8ea-0c484d3d7eaf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 04_monthly_sip_inflows.month
+	toColumn: LocalDateTable_05a04489-0923-4cb7-8500-51d106097432.Date
+
+relationship 620728a2-90c1-43a3-8bcc-24cd8a548d1f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 05_category_inflows.month
+	toColumn: LocalDateTable_7b7a4566-9750-4447-996f-9bb70c76a338.Date
+
+relationship b9f0529f-e177-44ae-95a5-94b0367e686b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 06_industry_folio_count.month
+	toColumn: LocalDateTable_83910e96-cd88-44a7-a8aa-915f9445cf55.Date
+
+relationship AutoDetected_58599e76-87b5-4fb6-ad18-b85ae861cd0c
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 07_scheme_performance.amfi_code
+	toColumn: 01_fund_master.amfi_code
+
+relationship 9262f354-984d-4ec1-822c-21db68584915
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 08_investor_transactions.transaction_date
+	toColumn: LocalDateTable_3365ea37-828b-430c-9d2f-87929f51d5e3.Date
+
+relationship AutoDetected_102f6849-af24-4546-b4f5-1099caaa64fa
+	fromColumn: 08_investor_transactions.amfi_code
+	toColumn: 01_fund_master.amfi_code
+
+relationship 6ab8e474-119e-42a7-800a-c9fba4d5dad6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 09_portfolio_holdings.portfolio_date
+	toColumn: LocalDateTable_428b7d44-eaf8-4c1e-9eba-7306d8405caa.Date
+
+relationship AutoDetected_b73f89eb-563b-4fe1-9371-fd5d903aecc8
+	fromColumn: 09_portfolio_holdings.amfi_code
+	toColumn: 01_fund_master.amfi_code
+
+relationship 1a97d188-68e6-400d-a42d-6f42e06d6d92
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 10_benchmark_indices.date
+	toColumn: LocalDateTable_d599acfd-b0da-496c-a783-6c1c0dddced9.Date
+
+relationship SP_AUM_FundHouse
+	isActive: false
+	toCardinality: many
+	fromColumn: 07_scheme_performance.fund_house
+	toColumn: 03_aum_by_fund_house.fund_house
+
+relationship CatInflows_FundMaster_Category
+	toCardinality: many
+	fromColumn: 05_category_inflows.category
+	toColumn: 01_fund_master.category
+
+relationship Rel_Nav_Date
+	fromColumn: 02_nav_history.date
+	toColumn: dim_date.date
+
+relationship Rel_AUM_Date
+	fromColumn: 03_aum_by_fund_house.date
+	toColumn: dim_date.date
+
+relationship Rel_SIP_Date
+	fromColumn: 04_monthly_sip_inflows.month
+	toColumn: dim_date.date
+
+relationship Rel_Cat_Date
+	fromColumn: 05_category_inflows.month
+	toColumn: dim_date.date
+
+relationship Rel_Folio_Date
+	fromColumn: 06_industry_folio_count.month
+	toColumn: dim_date.date
+
+relationship Rel_Txn_Date
+	fromColumn: 08_investor_transactions.transaction_date
+	toColumn: dim_date.date
+
+relationship Rel_Holdings_Date
+	fromColumn: 09_portfolio_holdings.portfolio_date
+	toColumn: dim_date.date
+
+relationship Rel_Benchmark_Date
+	fromColumn: 10_benchmark_indices.date
+	toColumn: dim_date.date
+

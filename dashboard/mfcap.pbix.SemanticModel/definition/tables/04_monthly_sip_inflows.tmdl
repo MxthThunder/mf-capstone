@@ -1,0 +1,113 @@
+table 04_monthly_sip_inflows
+	lineageTag: 9e6ac3a8-5a1a-40b6-8d5b-5f7e0f8161f5
+
+	/// Total SIP inflow in Crore
+	measure 'Total SIP Inflow (₹ Cr)' = SUM('04_monthly_sip_inflows'[sip_inflow_crore])
+		formatString: ₹#,##0
+		lineageTag: 98113193-9780-4186-b3b1-e3d5bdc00046
+
+	/// Most recent month SIP inflow
+	measure 'Latest SIP Inflow (₹ Cr)' =
+			VAR _lastMonth = MAXX(ALL('04_monthly_sip_inflows'), '04_monthly_sip_inflows'[month])
+			RETURN CALCULATE(SUM('04_monthly_sip_inflows'[sip_inflow_crore]), '04_monthly_sip_inflows'[month] = _lastMonth)
+		formatString: ₹#,##0
+		lineageTag: dde56536-1ec3-42eb-86d5-71f04b5418c4
+
+	/// Active SIP accounts in Crore (latest)
+	measure 'Latest Active SIP Accounts (Cr)' =
+			VAR _lastMonth = MAXX(ALL('04_monthly_sip_inflows'), '04_monthly_sip_inflows'[month])
+			RETURN CALCULATE(SUM('04_monthly_sip_inflows'[active_sip_accounts_crore]), '04_monthly_sip_inflows'[month] = _lastMonth)
+		formatString: #,##0.00
+		lineageTag: 6c86aeee-a922-4aa4-9818-c5b5c935342c
+
+	/// SIP AUM as Lakh Crore latest
+	measure 'Latest SIP AUM (₹ L Cr)' =
+			VAR _lastMonth = MAXX(ALL('04_monthly_sip_inflows'), '04_monthly_sip_inflows'[month])
+			RETURN CALCULATE(SUM('04_monthly_sip_inflows'[sip_aum_lakh_crore]), '04_monthly_sip_inflows'[month] = _lastMonth)
+		formatString: ₹#,##0.00" L Cr"
+		lineageTag: 4b3b7752-cccc-4a95-a281-5e1989cbf21c
+
+	/// YoY SIP growth pct
+	measure 'SIP YoY Growth (%)' =
+			VAR _lastMonth = MAXX(ALL('04_monthly_sip_inflows'), '04_monthly_sip_inflows'[month])
+			RETURN CALCULATE(AVERAGE('04_monthly_sip_inflows'[yoy_growth_pct]), '04_monthly_sip_inflows'[month] = _lastMonth)
+		formatString: 0.00"%"
+		lineageTag: f4bcc79b-6794-4a76-aa45-79de4c72ee28
+
+	column month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 24b2427a-523c-4cff-8ed5-3015e79336a0
+		summarizeBy: none
+		sourceColumn: month
+
+		variation Variation
+			isDefault
+			relationship: 4e1ddfe0-ee6e-4c58-b8ea-0c484d3d7eaf
+			defaultHierarchy: LocalDateTable_05a04489-0923-4cb7-8500-51d106097432.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column sip_inflow_crore
+		dataType: int64
+		formatString: 0
+		lineageTag: 75ca9e30-81e5-40d9-9e26-a8cc1ece18b8
+		summarizeBy: sum
+		sourceColumn: sip_inflow_crore
+
+		annotation SummarizationSetBy = Automatic
+
+	column active_sip_accounts_crore
+		dataType: double
+		lineageTag: 088b6efb-dd98-440a-8360-d5f4c57727fd
+		summarizeBy: none
+		sourceColumn: active_sip_accounts_crore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column new_sip_accounts_lakh
+		dataType: double
+		lineageTag: 2a4adbce-3118-4a5c-bef3-570e6f209f46
+		summarizeBy: sum
+		sourceColumn: new_sip_accounts_lakh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sip_aum_lakh_crore
+		dataType: double
+		lineageTag: dc1d55a4-c91b-412c-b2d0-2deb4052d03e
+		summarizeBy: sum
+		sourceColumn: sip_aum_lakh_crore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column yoy_growth_pct
+		dataType: double
+		lineageTag: 57f09246-a0e7-4ecc-a1a1-e15fc86402b5
+		summarizeBy: sum
+		sourceColumn: yoy_growth_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 04_monthly_sip_inflows = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_monthly_sip_inflows.csv"), [Delimiter = ",", Columns = 6, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"month", type date}, {"sip_inflow_crore", Int64.Type}, {"active_sip_accounts_crore", type number}, {"new_sip_accounts_lakh", type number}, {"sip_aum_lakh_crore", type number}, {"yoy_growth_pct", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

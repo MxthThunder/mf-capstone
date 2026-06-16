@@ -1,0 +1,201 @@
+table 08_investor_transactions
+	lineageTag: ae89b601-a47b-4e8d-843c-7f1dfd28bbb7
+
+	/// Total investor transaction amount
+	measure 'Total Transaction Amount (₹)' = SUM('08_investor_transactions'[amount_inr])
+		formatString: ₹#,##0
+		lineageTag: fbecfdfb-612f-4370-9f55-d72a61ede50d
+
+	/// Total SIP transaction amount
+	measure 'SIP Amount (₹)' = CALCULATE(SUM('08_investor_transactions'[amount_inr]), '08_investor_transactions'[transaction_type] = "SIP")
+		formatString: ₹#,##0
+		lineageTag: ed8194c1-7eef-46c0-a519-f6e858923927
+
+	/// Total lumpsum transaction amount
+	measure 'Lumpsum Amount (₹)' = CALCULATE(SUM('08_investor_transactions'[amount_inr]), '08_investor_transactions'[transaction_type] = "Lumpsum")
+		formatString: ₹#,##0
+		lineageTag: fb508ba3-7635-470d-93fe-58974be1f03b
+
+	/// Total redemption amount
+	measure 'Redemption Amount (₹)' = CALCULATE(SUM('08_investor_transactions'[amount_inr]), '08_investor_transactions'[transaction_type] = "Redemption")
+		formatString: ₹#,##0
+		lineageTag: 4bd92693-0104-4045-9a67-4c1ad10c6a5a
+
+	/// Count of investor transactions
+	measure 'Transaction Count' = COUNTROWS('08_investor_transactions')
+		formatString: #,##0
+		lineageTag: f667b600-fa5d-4dbe-b98b-53fc2370b99a
+
+	/// Average SIP amount by investor in scope
+	measure 'Avg SIP Amount (₹)' = CALCULATE(AVERAGE('08_investor_transactions'[amount_inr]), '08_investor_transactions'[transaction_type] = "SIP")
+		formatString: ₹#,##0
+		lineageTag: 1fbe73aa-756f-4f3a-99fc-094ae520285d
+
+	/// Unique investor count
+	measure 'Unique Investors' = DISTINCTCOUNT('08_investor_transactions'[investor_id])
+		formatString: #,##0
+		lineageTag: 2cae4a96-35a4-4946-9b4c-db3b31e95dd7
+
+	/// Net inflow (purchases minus redemptions)
+	measure 'Net Inflow (₹)' = ```
+			CALCULATE(SUM('08_investor_transactions'[amount_inr]), '08_investor_transactions'[transaction_type] IN {"SIP", "Lumpsum"}) 
+			- CALCULATE(SUM('08_investor_transactions'[amount_inr]), '08_investor_transactions'[transaction_type] = "Redemption")
+			```
+		formatString: ₹#,##0
+		lineageTag: 7cc1f4ad-8f0d-4650-b83d-8a0652f1c109
+
+	/// Pct share of SIP transactions out of total count
+	measure 'SIP Txn Share (%)' =
+			DIVIDE(
+			  CALCULATE(COUNTROWS('08_investor_transactions'), '08_investor_transactions'[transaction_type]="SIP"),
+			  COUNTROWS('08_investor_transactions')
+			) * 100
+		formatString: 0.00"%"
+		lineageTag: 9b3cbe4a-5d30-4c95-9652-3fc933dbb86a
+
+	/// Pct share of Lumpsum transactions
+	measure 'Lumpsum Txn Share (%)' =
+			DIVIDE(
+			  CALCULATE(COUNTROWS('08_investor_transactions'), '08_investor_transactions'[transaction_type]="Lumpsum"),
+			  COUNTROWS('08_investor_transactions')
+			) * 100
+		formatString: 0.00"%"
+		lineageTag: 1d45f0e6-7b49-4bb2-94e0-32859f231ecf
+
+	/// Pct share of Redemption transactions
+	measure 'Redemption Txn Share (%)' =
+			DIVIDE(
+			  CALCULATE(COUNTROWS('08_investor_transactions'), '08_investor_transactions'[transaction_type]="Redemption"),
+			  COUNTROWS('08_investor_transactions')
+			) * 100
+		formatString: 0.00"%"
+		lineageTag: 70738d34-895c-4663-b2a7-4ea7c2e62eb4
+
+	column investor_id
+		dataType: string
+		lineageTag: f7896d03-bb7c-4069-82c3-d228f810fe2e
+		summarizeBy: none
+		sourceColumn: investor_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0246dfcd-5a23-424b-bf50-1d10b98f2914
+		summarizeBy: none
+		sourceColumn: transaction_date
+
+		variation Variation
+			isDefault
+			relationship: 9262f354-984d-4ec1-822c-21db68584915
+			defaultHierarchy: LocalDateTable_3365ea37-828b-430c-9d2f-87929f51d5e3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column amfi_code
+		dataType: int64
+		formatString: 0
+		lineageTag: b23e0557-ceac-40c6-89d7-5de5240c2f09
+		summarizeBy: none
+		sourceColumn: amfi_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_type
+		dataType: string
+		lineageTag: 4c948f83-0457-4c6e-8aa4-89cd9fbcf9dd
+		summarizeBy: none
+		sourceColumn: transaction_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_inr
+		dataType: int64
+		formatString: 0
+		lineageTag: 99b6d05d-8829-453f-ae96-5366d5c4937f
+		summarizeBy: sum
+		sourceColumn: amount_inr
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: b8c4fe4a-29bb-443b-9d7b-a42a72c593c9
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 5a183f2c-ca9b-4b1d-85c6-38d679020fe4
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column city_tier
+		dataType: string
+		lineageTag: 046dfed6-b6cb-4c76-a62d-4ca73d4dc16e
+		summarizeBy: none
+		sourceColumn: city_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column age_group
+		dataType: string
+		lineageTag: dbd94e20-08c4-45d3-b83a-c969bd548c28
+		summarizeBy: none
+		sourceColumn: age_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: 345479a8-117d-4dc1-acd8-3ea66284bb14
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column annual_income_lakh
+		dataType: double
+		lineageTag: ac932c4b-8405-44c1-97bb-011afe2a17ee
+		summarizeBy: sum
+		sourceColumn: annual_income_lakh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column payment_mode
+		dataType: string
+		lineageTag: a7e90f12-8d52-42dc-866c-8c7c59bde1fd
+		summarizeBy: none
+		sourceColumn: payment_mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column kyc_status
+		dataType: string
+		lineageTag: 33637026-4fc5-4f06-b92e-3717544c01bf
+		summarizeBy: none
+		sourceColumn: kyc_status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 08_investor_transactions = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_investor_transactions.csv"), [Delimiter = ",", Columns = 13, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"investor_id", type text}, {"transaction_date", type date}, {"amfi_code", Int64.Type}, {"transaction_type", type text}, {"amount_inr", Int64.Type}, {"state", type text}, {"city", type text}, {"city_tier", type text}, {"age_group", type text}, {"gender", type text}, {"annual_income_lakh", type number}, {"payment_mode", type text}, {"kyc_status", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

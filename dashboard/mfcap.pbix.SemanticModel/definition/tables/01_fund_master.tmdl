@@ -1,0 +1,155 @@
+table 01_fund_master
+	lineageTag: 80234885-8b96-477f-946a-ade89a92d513
+
+	/// Industry headline: Total registered schemes (static AMFI figure for KPI card)
+	measure 'Industry Schemes (AMFI)' = 1908
+		formatString: #,##0
+		lineageTag: 70acdb31-aaaa-408d-a930-306651d0e4b8
+
+	column amfi_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 6976ddeb-8b1a-4056-a8a6-6a7611adb572
+		summarizeBy: none
+		sourceColumn: amfi_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column fund_house
+		dataType: string
+		lineageTag: 71d63ac8-286e-42ff-ab7a-c882a8c831d7
+		summarizeBy: none
+		sourceColumn: fund_house
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheme_name
+		dataType: string
+		lineageTag: 328d89f0-f0c4-43c5-b4ed-53f13fc63019
+		summarizeBy: none
+		sourceColumn: scheme_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 57ec1c7c-19df-4993-9f85-672a1b25ae87
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_category
+		dataType: string
+		lineageTag: 285f0c8c-df9b-4885-8397-0bbc3c4a9c9f
+		summarizeBy: none
+		sourceColumn: sub_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column plan
+		dataType: string
+		lineageTag: 722f3291-1bed-44d0-b84f-2414b0808bb0
+		summarizeBy: none
+		sourceColumn: plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column launch_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 10ba1395-7027-4f1f-81e6-a1ff634bb12d
+		summarizeBy: none
+		sourceColumn: launch_date
+
+		variation Variation
+			isDefault
+			relationship: e348ce83-f249-4a51-a09c-2517a8a1bb98
+			defaultHierarchy: LocalDateTable_6157b204-7209-49c0-8512-bb4f841a4a8b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column benchmark
+		dataType: string
+		lineageTag: 4fe2c8ac-2a82-46d8-92c5-0d3425cd4e07
+		summarizeBy: none
+		sourceColumn: benchmark
+
+		annotation SummarizationSetBy = Automatic
+
+	column expense_ratio_pct
+		dataType: double
+		lineageTag: 548927c7-ec2f-4f67-b0d0-f2e4c9bd8486
+		summarizeBy: sum
+		sourceColumn: expense_ratio_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column exit_load_pct
+		dataType: double
+		lineageTag: 56af9aa6-be07-48dc-8168-9fde4c86e4ca
+		summarizeBy: sum
+		sourceColumn: exit_load_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column min_sip_amount
+		dataType: int64
+		formatString: 0
+		lineageTag: 5683dde2-24f3-414e-9caf-a3bd5b76f004
+		summarizeBy: sum
+		sourceColumn: min_sip_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column min_lumpsum_amount
+		dataType: int64
+		formatString: 0
+		lineageTag: 85a36602-b46a-4ac6-823a-8073aa6682f8
+		summarizeBy: sum
+		sourceColumn: min_lumpsum_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column fund_manager
+		dataType: string
+		lineageTag: ecb2299c-377a-4395-b0e8-fc5381e55c2c
+		summarizeBy: none
+		sourceColumn: fund_manager
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_category
+		dataType: string
+		lineageTag: c42fe7b4-8080-4235-8010-f7a4a302e25c
+		summarizeBy: none
+		sourceColumn: risk_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column sebi_category_code
+		dataType: string
+		lineageTag: 494c8582-f58e-4614-b00b-974cdc6f244f
+		summarizeBy: none
+		sourceColumn: sebi_category_code
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 01_fund_master = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_fund_master.csv"), [Delimiter = ",", Columns = 15, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"amfi_code", Int64.Type}, {"fund_house", type text}, {"scheme_name", type text}, {"category", type text}, {"sub_category", type text}, {"plan", type text}, {"launch_date", type date}, {"benchmark", type text}, {"expense_ratio_pct", type number}, {"exit_load_pct", type number}, {"min_sip_amount", Int64.Type}, {"min_lumpsum_amount", Int64.Type}, {"fund_manager", type text}, {"risk_category", type text}, {"sebi_category_code", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

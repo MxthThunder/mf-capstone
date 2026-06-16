@@ -1,0 +1,67 @@
+table 02_nav_history
+	lineageTag: a76e0c91-0411-4833-9355-0cee9c928aed
+
+	/// Latest NAV for a fund
+	measure 'Latest NAV (₹)' =
+			VAR _lastDate = MAXX(ALL('02_nav_history'), '02_nav_history'[date])
+			RETURN CALCULATE(AVERAGE('02_nav_history'[nav]), '02_nav_history'[date] = _lastDate)
+		formatString: ₹#,##0.00
+		lineageTag: 1c0152b0-3094-4f69-a061-1b55f6810cde
+
+	/// NAV growth from earliest to latest
+	measure 'NAV Total Growth (%)' =
+			VAR _firstDate = MINX(ALL('02_nav_history'), '02_nav_history'[date])
+			VAR _lastDate = MAXX(ALL('02_nav_history'), '02_nav_history'[date])
+			VAR _firstNAV = CALCULATE(AVERAGE('02_nav_history'[nav]), '02_nav_history'[date] = _firstDate)
+			VAR _lastNAV = CALCULATE(AVERAGE('02_nav_history'[nav]), '02_nav_history'[date] = _lastDate)
+			RETURN IF(_firstNAV > 0, DIVIDE(_lastNAV - _firstNAV, _firstNAV) * 100, BLANK())
+		formatString: 0.00"%"
+		lineageTag: a06aa5be-679f-41ad-89da-bec02f36937a
+
+	column amfi_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 4367445b-ded7-4290-8cb0-9db4fc548335
+		summarizeBy: none
+		sourceColumn: amfi_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: aa826972-07ed-4d9a-ae93-74da376bfaa2
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: bca6bb13-666b-4701-ad1a-7efc005e266e
+			defaultHierarchy: LocalDateTable_05525634-6de4-428a-87c2-2fa6ba021be0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column nav
+		dataType: double
+		lineageTag: 850731c7-7ea3-49d2-b0b1-46e1d02d2245
+		summarizeBy: sum
+		sourceColumn: nav
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 02_nav_history = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Datatatatta\data\processed\cleaned_nav_history.csv"), [Delimiter = ",", Columns = 3, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"amfi_code", Int64.Type}, {"date", type date}, {"nav", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

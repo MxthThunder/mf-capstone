@@ -1,0 +1,146 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY26SU05",
+      "reportVersionAtImport": {
+        "visual": "2.9.0",
+        "report": "3.3.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU05",
+          "path": "BaseThemes/CY26SU05.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "logo_eeb70fb3.png",
+          "path": "logo_eeb70fb3.png",
+          "type": "Image"
+        },
+        {
+          "name": "01_nav_trends_914fecc7.png",
+          "path": "01_nav_trends_914fecc7.png",
+          "type": "Image"
+        },
+        {
+          "name": "02_aum_growth_f28aa223.png",
+          "path": "02_aum_growth_f28aa223.png",
+          "type": "Image"
+        },
+        {
+          "name": "03_sip_inflow_trend_af76f5e0.png",
+          "path": "03_sip_inflow_trend_af76f5e0.png",
+          "type": "Image"
+        },
+        {
+          "name": "04_category_inflow_heatmap_0d21efc3.png",
+          "path": "04_category_inflow_heatmap_0d21efc3.png",
+          "type": "Image"
+        },
+        {
+          "name": "05_age_group_pie_989dda19.png",
+          "path": "05_age_group_pie_989dda19.png",
+          "type": "Image"
+        },
+        {
+          "name": "06_sip_box_plot_9cdc3262.png",
+          "path": "06_sip_box_plot_9cdc3262.png",
+          "type": "Image"
+        },
+        {
+          "name": "07_gender_pie_c33d8145.png",
+          "path": "07_gender_pie_c33d8145.png",
+          "type": "Image"
+        },
+        {
+          "name": "08_geographic_state_bar_5a007988.png",
+          "path": "08_geographic_state_bar_5a007988.png",
+          "type": "Image"
+        },
+        {
+          "name": "09_city_tier_pie_00579ee4.png",
+          "path": "09_city_tier_pie_00579ee4.png",
+          "type": "Image"
+        },
+        {
+          "name": "10_folio_growth_faa500ef.png",
+          "path": "10_folio_growth_faa500ef.png",
+          "type": "Image"
+        },
+        {
+          "name": "11_nav_correlation_matrix_3b9afc5b.png",
+          "path": "11_nav_correlation_matrix_3b9afc5b.png",
+          "type": "Image"
+        },
+        {
+          "name": "12_sector_donut_63f7ddc4.png",
+          "path": "12_sector_donut_63f7ddc4.png",
+          "type": "Image"
+        },
+        {
+          "name": "13_morningstar_ratings_18e8b677.png",
+          "path": "13_morningstar_ratings_18e8b677.png",
+          "type": "Image"
+        },
+        {
+          "name": "14_risk_categories_1b01b928.png",
+          "path": "14_risk_categories_1b01b928.png",
+          "type": "Image"
+        },
+        {
+          "name": "15_expense_vs_return_scatter_bfe95118.png",
+          "path": "15_expense_vs_return_scatter_bfe95118.png",
+          "type": "Image"
+        },
+        {
+          "name": "16_payment_mode_pie_3a989a32.png",
+          "path": "16_payment_mode_pie_3a989a32.png",
+          "type": "Image"
+        },
+        {
+          "name": "benchmark_comparison_f1d7cbce.png",
+          "path": "benchmark_comparison_f1d7cbce.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

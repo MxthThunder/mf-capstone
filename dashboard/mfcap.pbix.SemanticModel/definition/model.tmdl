@@ -1,0 +1,44 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["01_fund_master","02_nav_history","03_aum_by_fund_house","04_monthly_sip_inflows","05_category_inflows","06_industry_folio_count","07_scheme_performance","08_investor_transactions","09_portfolio_holdings","10_benchmark_indices","Axis_Bluechip_nav","HDFC_Top_100_Direct_nav","ICICI_Bluechip_nav","Kotak_Bluechip_nav","Nippon_Large_Cap_nav","SBI_Bluechip_nav","dim_date"]
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table 01_fund_master
+ref table DateTableTemplate_d637929c-bd7a-41d3-8eb7-f27d68eafcf7
+ref table LocalDateTable_6157b204-7209-49c0-8512-bb4f841a4a8b
+ref table 02_nav_history
+ref table LocalDateTable_05525634-6de4-428a-87c2-2fa6ba021be0
+ref table 03_aum_by_fund_house
+ref table LocalDateTable_5dd23771-09d6-4ac2-9e9e-51d6cd385074
+ref table 04_monthly_sip_inflows
+ref table LocalDateTable_05a04489-0923-4cb7-8500-51d106097432
+ref table 05_category_inflows
+ref table LocalDateTable_7b7a4566-9750-4447-996f-9bb70c76a338
+ref table 06_industry_folio_count
+ref table LocalDateTable_83910e96-cd88-44a7-a8aa-915f9445cf55
+ref table 07_scheme_performance
+ref table 08_investor_transactions
+ref table LocalDateTable_3365ea37-828b-430c-9d2f-87929f51d5e3
+ref table 09_portfolio_holdings
+ref table LocalDateTable_428b7d44-eaf8-4c1e-9eba-7306d8405caa
+ref table 10_benchmark_indices
+ref table LocalDateTable_d599acfd-b0da-496c-a783-6c1c0dddced9
+ref table Axis_Bluechip_nav
+ref table HDFC_Top_100_Direct_nav
+ref table ICICI_Bluechip_nav
+ref table Kotak_Bluechip_nav
+ref table Nippon_Large_Cap_nav
+ref table SBI_Bluechip_nav
+ref table dim_date
+
+ref cultureInfo en-US
+
