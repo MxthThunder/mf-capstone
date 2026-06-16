@@ -28,10 +28,18 @@ print("=== STARTING CAPSTONE ETL PIPELINE ===")
 # --- 1. CLEANING FUNCTIONS ---
 
 def clean_fund_master(df):
+    """
+    Cleans and standardizes the fund master schema.
+    Converts launch dates into YYYY-MM-DD format strings.
+    """
     df['launch_date'] = pd.to_datetime(df['launch_date']).dt.strftime('%Y-%m-%d')
     return df
 
 def clean_nav_history(df):
+    """
+    Cleans the historical NAV time series data.
+    Removes duplicates, filters out negative prices, and forward-fills holiday/weekend price gaps.
+    """
     df['date'] = pd.to_datetime(df['date'])
     df = df.drop_duplicates(subset=['amfi_code', 'date'])
     df = df[df['nav'] > 0]
@@ -55,6 +63,10 @@ def clean_nav_history(df):
     return df_cleaned
 
 def clean_transactions(df):
+    """
+    Cleans investor transaction records.
+    Normalizes transaction types, filters positive amounts, and standardizes KYC formats.
+    """
     df['transaction_date'] = pd.to_datetime(df['transaction_date'])
     df['transaction_type'] = df['transaction_type'].astype(str).str.strip()
     mapping = {
@@ -69,10 +81,15 @@ def clean_transactions(df):
     return df
 
 def clean_performance(df):
+    """
+    Cleans scheme performance statistics.
+    Converts return and index percentages to floating-point values.
+    """
     return_cols = ['return_1yr_pct', 'return_3yr_pct', 'return_5yr_pct', 'benchmark_3yr_pct']
     for col in return_cols:
         df[col] = pd.to_numeric(df[col], errors='coerce')
     return df
+
 
 # --- 2. LOAD DATA ---
 print("Reading raw CSV files...")

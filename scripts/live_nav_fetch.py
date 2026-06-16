@@ -8,6 +8,10 @@ os.makedirs(RAW_DIR, exist_ok=True)
 BASE_URL = "https://api.mfapi.in/mf"
 
 def fetch_nav(scheme_code: str, scheme_name: str):
+    """
+    Fetches daily net asset values (NAV) for a specified AMFI scheme code from the public API
+    and saves the time series as a raw CSV in data/raw.
+    """
     url = f"{BASE_URL}/{scheme_code}"
     resp = requests.get(url, timeout=10)
     resp.raise_for_status()
@@ -17,6 +21,7 @@ def fetch_nav(scheme_code: str, scheme_name: str):
     out_path = os.path.join(RAW_DIR, f"{scheme_name}_nav.csv")
     df.to_csv(out_path, index=False)
     print(f"Saved {scheme_name} NAV to {out_path}")
+
 
 if __name__ == "__main__":
     schemes = {

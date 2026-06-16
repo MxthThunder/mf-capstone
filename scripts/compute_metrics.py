@@ -1,3 +1,9 @@
+"""
+Bluestock Mutual Fund Performance Metrics Calculator.
+This script connects to the SQLite star schema database, queries daily NAV histories,
+and computes annualized CAGR, Sharpe Ratio (relative to 6% risk-free rate), Beta vs Benchmark Index,
+and 95% Daily Value at Risk (VaR) for all registered schemes.
+"""
 import os
 import sqlite3
 import pandas as pd

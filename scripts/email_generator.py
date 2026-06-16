@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import smtplib
+import pandas as pd
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -9,6 +10,10 @@ workspace = r"c:\Datatatatta"
 db_path = os.path.join(workspace, "data", "db", "bluestock_mf.db")
 
 def generate_weekly_report():
+    """
+    Queries the SQLite relational database to extract performance KPIs and transaction summary metrics,
+    and returns a formatted HTML weekly performance report.
+    """
     conn = sqlite3.connect(db_path)
     
     # 1. Fetch Top 3 Performing Funds (3-Year return)
@@ -125,6 +130,5 @@ def send_email(html_body, to_email="recipient@example.com"):
     #     server.sendmail(from_email, to_email, msg.as_string())
 
 if __name__ == "__main__":
-    import pandas as pd
     html = generate_weekly_report()
     send_email(html)
