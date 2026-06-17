@@ -1,3 +1,9 @@
+"""
+Bluestock Mutual Fund ETL Pipeline and Database Ingestion.
+This script cleans the raw CSV datasets, standardizes fields (KYC, transaction types, dates),
+handles holiday and weekend price gaps using daily forward-fills, initializes the SQLite database schema,
+and loads data into the Star Schema tables.
+"""
 import os
 import pandas as pd
 from sqlalchemy import create_engine, text

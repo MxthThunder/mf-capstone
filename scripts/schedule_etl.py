@@ -1,3 +1,9 @@
+"""
+Bluestock Mutual Fund Weekday ETL Scheduler.
+This script implements a background scheduler loop that monitors time and executes
+the ingestion, cleaning, and database loading sequence at 8:00 PM on weekdays.
+It also registers Windows Scheduled Task parameters.
+"""
 import os
 import subprocess
 import sys

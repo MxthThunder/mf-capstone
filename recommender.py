@@ -1,9 +1,19 @@
+"""
+Bluestock Mutual Fund Portfolio Demographics Recommender CLI.
+This script provides a command-line interface to get fund recommendations
+based on user-specified risk appetite (Low, Moderate, High).
+It retrieves the top 3 performing schemes by Sharpe ratio from the SQLite database.
+"""
 import os
 import sys
 import sqlite3
 import pandas as pd
 
 def get_db_connection():
+    """
+    Establishes and returns a connection to the SQLite database.
+    Looks for the database at canonical workspace paths.
+    """
     # Attempt to locate the SQLite database
     base_dir = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.join(base_dir, "data", "db", "bluestock_mf.db")
@@ -19,6 +29,12 @@ def get_db_connection():
     return sqlite3.connect(db_path)
 
 def get_recommendations(risk_appetite):
+    """
+    Retrieves the top 3 recommended mutual fund schemes matching the user's risk appetite.
+    - Low risk maps to Low risk grade
+    - Moderate risk maps to Moderate and Moderately High risk grades
+    - High risk maps to High and Very High risk grades
+    """
     risk_appetite = risk_appetite.strip().title()
     
     # Map risk appetite to database risk grades
@@ -51,6 +67,9 @@ def get_recommendations(risk_appetite):
     return df
 
 def print_table(df, title):
+    """
+    Prints the recommended funds in a nicely formatted CLI table.
+    """
     print("\n" + "=" * 80)
     print(f" {title.upper()} ".center(80, "="))
     print("=" * 80)

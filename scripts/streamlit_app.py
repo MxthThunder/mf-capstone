@@ -1,3 +1,12 @@
+"""
+Bluestock Mutual Fund Portfolio Analytics Dashboard Portal.
+This multi-page Streamlit application serves as the user portal for retail mutual fund performance.
+It includes 4 pages:
+1. Executive Summary & Industry AUM: Overview KPIs and AUM trends.
+2. Scheme Performance & Risk: Sharpe vs returns scatter and metrics table.
+3. Investor Demographics & Geography: Pie, box, and bar plots splitting transaction volumes.
+4. Advanced Financial Analytics: Monte Carlo NAV simulation paths and Markowitz Efficient Frontier curves.
+"""
 import os
 import sqlite3
 import pandas as pd
@@ -24,6 +33,9 @@ st.markdown("""
 
 # Helper database connector
 def get_connection():
+    """
+    Establishes and returns a connection to the SQLite database.
+    """
     return sqlite3.connect(db_path)
 
 # Navigation

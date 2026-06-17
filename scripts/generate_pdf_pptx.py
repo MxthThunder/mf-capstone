@@ -1,3 +1,12 @@
+"""
+Bluestock Mutual Fund Portfolio & Risk Analytics Document Compiler.
+This script generates:
+1. A 20-page executive ReportLab PDF report containing KPI summaries, star schema architectures,
+   EDA visualizations, CAGR/Sharpe computations, VaR risk profiling, Monte Carlo simulations,
+   Markowitz Efficient Frontier calculations, and recommendations.
+2. A 12-slide PowerPoint presentation outlining the project objectives, data assets, star schema database,
+   EDA highlights, performance analytics, dashboard screenshots, key findings, and concluding slide.
+"""
 import os
 import sqlite3
 import pandas as pd
@@ -769,17 +778,18 @@ def build_pdf():
         ["fact_performance", "performance_id (PK), amfi_code (FK)", "return_3yr_pct, sharpe_ratio, beta, aum_crore, rating"],
         ["fact_portfolio_holdings", "holding_id (PK), amfi_code (FK)", "stock_symbol, stock_name, sector, weight_pct"]
     ]
-    t_schema = Table(schema_details, colWidths=[120, 150, 230])
+    t_schema = Table(schema_details, colWidths=[110, 140, 250])
     t_schema.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor(PRIMARY_HEX)),
         ('TEXTCOLOR', (0,0), (-1,0), colors.white),
-        ('FONTSIZE', (0,0), (-1,-1), 8.5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+        ('FONTSIZE', (0,0), (-1,-1), 8),
+        ('TOPPADDING', (0,0), (-1,-1), 3),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 3),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.HexColor(LIGHT_BG_HEX), colors.white]),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor("#dddddd")),
     ]))
     story.append(t_schema)
-    story.append(Spacer(1, 15))
+    story.append(Spacer(1, 8))
     story.append(Paragraph("The code repository is structured into `scripts/` (python pipeline execution, recommender and app scripts), "
                            "`notebooks/` (development work and advanced modeling), `sql/` (schema scripts), and "
                            "`reports/` (visual results, final PDF, and presentation slides).", body_style))
@@ -983,31 +993,31 @@ def build_pptx():
     if os.path.exists(age_img):
         slide6.shapes.add_picture(age_img, Inches(6.8), Inches(1.8), Inches(6.0), Inches(4.2))
 
-    # SLIDE 7: Performance Analytics — Risk vs Return
-    slide7 = create_slide("Performance Analytics: Return vs Volatility")
+    # SLIDE 7: Performance Analytics 1 — Return, Volatility & Efficient Frontier
+    slide7 = create_slide("Performance Metrics: Return, Volatility & Frontier")
     box = slide7.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(5.8), Inches(5.0))
     tf = box.text_frame
     tf.word_wrap = True
     
     bullets = [
         "Annualization: All CAGRs and Sharpe ratios are evaluated using the 252-trading day convention.",
-        "Equity schemes outperform, registering an average 3-year CAGR of 14.86% and average Sharpe of 1.12.",
-        "Hybrid portfolios register balanced return parameters (CAGR: 11.23%, Sharpe: 0.94) with lower daily standard deviations.",
-        "Debt-oriented plans offer wealth preservation, registering CAGRs of 6.54% and negligible market Beta (<0.15)."
+        "Equity Outperformance: Average 3-year CAGR is 14.86% (Avg Sharpe: 1.12); Hybrid schemes deliver CAGR of 11.23% (Avg Sharpe: 0.94); Debt schemes yield CAGR of 6.54% (Avg Sharpe: 0.81).",
+        "Markowitz Portfolio Optimization: Covariance mapping of returns for 5 key large-cap bluechip funds identifies the Efficient Frontier curve.",
+        "Tangency Portfolio (Max Sharpe: 1.18) allocates: SBI Bluechip (32%), ICICI (28%), Nippon (25%), Kotak (15%). Minimum Variance Portfolio reduces volatility to 10.12%."
     ]
     for b in bullets:
         p_b = tf.add_paragraph()
         p_b.text = "• " + b
-        p_b.font.size = Pt(14)
-        p_b.space_before = Pt(10)
+        p_b.font.size = Pt(13)
+        p_b.space_before = Pt(8)
         p_b.font.color.rgb = TEXT_RGB
         
     scatter_img = os.path.join(figures_dir, "15_expense_vs_return_scatter.png")
     if os.path.exists(scatter_img):
         slide7.shapes.add_picture(scatter_img, Inches(6.8), Inches(1.8), Inches(6.0), Inches(4.2))
 
-    # SLIDE 8: Advanced Risk Analytics — VaR & CVaR
-    slide8 = create_slide("Advanced Risk Analytics: VaR & CVaR Tail Risks")
+    # SLIDE 8: Performance Analytics 2 — Downside Risk & Simulations
+    slide8 = create_slide("Performance Metrics: Downside Risk & Simulations")
     box = slide8.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(5.8), Inches(5.0))
     tf = box.text_frame
     tf.word_wrap = True
@@ -1015,75 +1025,53 @@ def build_pptx():
     bullets = [
         "Value at Risk (95% Daily VaR) represents the maximum daily loss threshold with 95% confidence (5th percentile).",
         "Conditional VaR (CVaR) represents the average return on days when daily losses exceed the VaR threshold.",
-        "Small-cap equity schemes show severe tail risk, led by ABSL Small Cap (VaR: -2.39%, CVaR: -3.03%).",
-        "Liquid and short-term debt schemes display negligible tail risk, with ICICI Pru Liquid showing a VaR of -0.019%."
+        "Tail Risk concentrations: Small-cap equity schemes show severe tail risk, led by ABSL Small Cap (VaR: -2.39%, CVaR: -3.03%).",
+        "Monte Carlo Projections: 1,000 paths project the 5-year NAV compounding trajectory for SBI Bluechip Fund using Geometric Brownian Motion (GBM).",
+        "Expected mean path projects 99.28% growth (expected NAV: ₹164.21), with 90% confidence bands between ₹94.50 and ₹248.10."
     ]
     for b in bullets:
         p_b = tf.add_paragraph()
         p_b.text = "• " + b
-        p_b.font.size = Pt(14)
-        p_b.space_before = Pt(10)
+        p_b.font.size = Pt(13)
+        p_b.space_before = Pt(8)
         p_b.font.color.rgb = TEXT_RGB
         
     corr_img = os.path.join(figures_dir, "11_nav_correlation_matrix.png")
     if os.path.exists(corr_img):
         slide8.shapes.add_picture(corr_img, Inches(6.8), Inches(1.8), Inches(6.0), Inches(4.2))
 
-    # SLIDE 9: Advanced Models — Monte Carlo & Efficient Frontier
-    slide9 = create_slide("Advanced Modeling: GBM & Efficient Frontier")
-    box = slide9.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(5.8), Inches(5.0))
-    tf = box.text_frame
-    tf.word_wrap = True
-    
-    bullets = [
-        "Monte Carlo: 1,000 paths project the 5-year NAV compounding trajectory for SBI Bluechip Fund using Geometric Brownian Motion.",
-        "Expected mean path projects 99.28% growth (NAV: ₹164.21), with 90% confidence bands between ₹94.50 and ₹248.10.",
-        "Markowitz Optimization: Covariance mapping of returns for 5 key bluechip funds identifies the Efficient Frontier.",
-        "Tangent Portfolio (Max Sharpe: 1.18) allocates: SBI Bluechip (32%), ICICI (28%), Nippon (25%), Kotak (15%)."
-    ]
-    for b in bullets:
-        p_b = tf.add_paragraph()
-        p_b.text = "• " + b
-        p_b.font.size = Pt(14)
-        p_b.space_before = Pt(10)
-        p_b.font.color.rgb = TEXT_RGB
-        
-    donut_img = os.path.join(figures_dir, "12_sector_donut.png")
-    if os.path.exists(donut_img):
-        slide9.shapes.add_picture(donut_img, Inches(6.8), Inches(1.8), Inches(6.0), Inches(4.2))
-
-    # SLIDE 10: Dashboard Screenshot — Executive & Performance
-    slide10 = create_slide("Streamlit Dashboard: Executive & Performance")
+    # SLIDE 9: Dashboard Screenshot — Executive & Performance
+    slide9 = create_slide("Streamlit Dashboard: Executive & Performance Pages")
     p1 = os.path.join(reports_dir, "Page_1_Industry_Overview.png")
     if os.path.exists(p1):
-        slide10.shapes.add_picture(p1, Inches(0.5), Inches(1.6), Inches(5.9), Inches(4.8))
+        slide9.shapes.add_picture(p1, Inches(0.5), Inches(1.6), Inches(5.9), Inches(4.8))
         
     p2 = os.path.join(reports_dir, "Page_2_Fund_Performance.png")
     if os.path.exists(p2):
-        slide10.shapes.add_picture(p2, Inches(6.8), Inches(1.6), Inches(5.9), Inches(4.8))
+        slide9.shapes.add_picture(p2, Inches(6.8), Inches(1.6), Inches(5.9), Inches(4.8))
 
-    # SLIDE 11: Dashboard Screenshot — Investor & Market Trends
-    slide11 = create_slide("Streamlit Dashboard: Investor & Market Trends")
+    # SLIDE 10: Dashboard Screenshot — Investor & Market Trends
+    slide10 = create_slide("Streamlit Dashboard: Investor & Market Trends Pages")
     p3 = os.path.join(reports_dir, "Page_3_Investor_Analytics.png")
     if os.path.exists(p3):
-        slide11.shapes.add_picture(p3, Inches(0.5), Inches(1.6), Inches(5.9), Inches(4.8))
+        slide10.shapes.add_picture(p3, Inches(0.5), Inches(1.6), Inches(5.9), Inches(4.8))
         
     p4 = os.path.join(reports_dir, "Page_4_SIP_Market_Trends.png")
     if os.path.exists(p4):
-        slide11.shapes.add_picture(p4, Inches(6.8), Inches(1.6), Inches(5.9), Inches(4.8))
+        slide10.shapes.add_picture(p4, Inches(6.8), Inches(1.6), Inches(5.9), Inches(4.8))
 
-    # SLIDE 12: Recommendations & Strategic Roadmap
-    slide12 = create_slide("Key Takeaways & Strategic Recommendations")
-    box = slide12.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(12.333), Inches(5.0))
+    # SLIDE 11: Key Findings & Business Insights
+    slide11 = create_slide("Key Findings & Business Insights")
+    box = slide11.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(12.333), Inches(5.0))
     tf = box.text_frame
     tf.word_wrap = True
     
     bullets = [
-        "Millennial Product Placement: Younger cohorts (18-35) make up 66.3% of users. Target them with mobile micro-SIP products.",
-        "Tap Beyond-30 (B30) Markets: B30 semi-urban regions generate 30.1% of capital. Expand digital onboarding in tier-2/3 cities.",
-        "Improve SIP Mandate Continuity: With 99% of users showing transaction gaps >35 days, implement push notification reminders, flexible pause options, and bank e-mandates.",
-        "Embed Advanced Portfolio Tools: Integrate the asset allocator and Monte Carlo simulator into retail client portals.",
-        "Thank You! Any Questions?"
+        "Millennial Demographics: Younger cohorts (18-35) contribute 66.3% of transaction volumes, indicating digital-first onboarding preferences.",
+        "Semi-Urban Inflows: Beyond-30 (B30) cities drive 30.1% of capital, representing a major growth market outside metro areas.",
+        "Transaction Continuity Gap: 99% of retail investors show transaction gaps >35 days, indicating high SIP mandate attrition.",
+        "Diversification and Risk: Small-cap tail risk is severe (losses exceeding 3% daily), requiring balanced hybrid/debt overlays.",
+        "UPI & Net Banking: Digital payments dominate the retail transaction volume, aligning with digital onboarding channels."
     ]
     for b in bullets:
         p_b = tf.add_paragraph()
@@ -1091,6 +1079,35 @@ def build_pptx():
         p_b.font.size = Pt(15)
         p_b.space_before = Pt(12)
         p_b.font.color.rgb = TEXT_RGB
+
+    # SLIDE 12: Concluding Slide
+    slide12 = create_slide("Questions & Answers")
+    box = slide12.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(11.333), Inches(4.0))
+    tf = box.text_frame
+    tf.word_wrap = True
+    
+    p1 = tf.paragraphs[0]
+    p1.alignment = PP_ALIGN.CENTER
+    p1.text = "THANK YOU!"
+    p1.font.size = Pt(48)
+    p1.font.bold = True
+    p1.font.color.rgb = PRIMARY_RGB
+    p1.font.name = "Arial"
+    
+    p2 = tf.add_paragraph()
+    p2.alignment = PP_ALIGN.CENTER
+    p2.text = "Bluestock Mutual Fund Portfolio & Risk Analytics Platform"
+    p2.font.size = Pt(20)
+    p2.font.bold = True
+    p2.font.color.rgb = SECONDARY_RGB
+    p2.space_before = Pt(20)
+    
+    p3 = tf.add_paragraph()
+    p3.alignment = PP_ALIGN.CENTER
+    p3.text = "An End-to-End Star Schema, Analytics, and Financial Modeling Solution\nAuthor: Antigravity AI Engineer  |  Release v1.0 (Final)"
+    p3.font.size = Pt(14)
+    p3.font.color.rgb = RGBColor(100, 110, 120)
+    p3.space_before = Pt(15)
 
     prs.save(pptx_path)
     # Copy to reports as well to keep both paths

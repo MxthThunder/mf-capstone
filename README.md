@@ -120,6 +120,10 @@ streamlit run scripts/streamlit_app.py
 ```
 *Streamlit dashboard serves 4 interactive pages: Executive Summary, Fund Scorecard, Demographics Analytics, and Monte Carlo/Efficient Frontier projections.*
 
+#### Step 4b: Live Published Dashboard (Optional)
+The dashboard can be published to Tableau Public or Power BI Service. Once published, the web version can be accessed here:
+* **Tableau Public Dashboard:** [Insert Live Dashboard URL Here]
+
 #### Step 5: Compile Final Reports & PowerPoint Slides
 Compiles the ReportLab PDF report and the widescreen 16:9 presentation:
 ```bash

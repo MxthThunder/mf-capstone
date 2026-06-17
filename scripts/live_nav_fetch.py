@@ -1,3 +1,8 @@
+"""
+Bluestock Mutual Fund Live NAV API Ingestion.
+This script fetches the latest daily net asset values (NAV) for active schemes
+using the public mutual fund API (api.mfapi.in) and stores them as raw CSV files.
+"""
 import os
 import requests
 import pandas as pd

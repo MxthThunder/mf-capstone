@@ -1,3 +1,9 @@
+"""
+Bluestock Mutual Fund Weekly Performance Email Digest Generator.
+This script extracts weekly performance KPIs and transaction summary metrics
+from the SQLite database, compiles them into a structured HTML email template,
+and mocks an email delivery alert.
+"""
 import os
 import sqlite3
 import smtplib

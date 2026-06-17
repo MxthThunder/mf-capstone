@@ -1,3 +1,9 @@
+"""
+Bluestock Mutual Fund Cohort Demographic Recommender.
+This script implements a content-based recommendation class that takes an investor's ID,
+infers their risk profile from demographic age cohorts, and recommends the top 3
+highest-rated/performing mutual fund schemes they do not currently own.
+"""
 import os
 import sqlite3
 import pandas as pd
@@ -7,13 +13,27 @@ workspace = r"c:\Datatatatta"
 db_path = os.path.join(workspace, "data", "db", "bluestock_mf.db")
 
 class MutualFundRecommender:
+    """
+    Programmatic recommendation engine for matching investor portfolios
+    with suitable fund schemes using age-inferred risk grade rules.
+    """
     def __init__(self, db_path):
+        """
+        Initializes the recommender with the path to the database.
+        """
         self.db_path = db_path
         
     def get_conn(self):
+        """
+        Establishes and returns a connection to the SQLite database.
+        """
         return sqlite3.connect(self.db_path)
         
     def recommend_for_investor(self, investor_id):
+        """
+        Generates up to 3 recommended mutual fund schemes matching the investor's demographic age cohort.
+        Excludes schemes they already own.
+        """
         conn = self.get_conn()
         
         # 1. Fetch investor demographics and owned funds
